@@ -45,8 +45,8 @@ jobs:
   # workflow_run payload is empty.
   # For more details, see
   # https://github.community/t/pull-request-attribute-empty-in-workflow-run-event-object-for-pr-from-forked-repo/154682
-  build-jdk11:
-    name: "JVM Tests - JDK 11"
+  build-jdk:
+    name: "JVM Tests"
     runs-on: ubuntu-latest
     # Skip main in forks
     # Skip draft PRs and those with WIP in the subject, rerun as soon as its removed
@@ -57,11 +57,11 @@ jobs:
       - uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: Set up JDK 11
+      - name: Set up JDK
         uses: actions/setup-java@v2
         with:
           distribution: temurin
-          java-version: 11
+          java-version: 21
       - name: Build
         shell: bash
         # Despite the pre-calculated run_jvm flag, GIB has to be re-run here to figure out the exact submodules to build.
@@ -73,7 +73,7 @@ jobs:
       - name: Upload build reports (if build failed)
         uses: actions/upload-artifact@v2
         with:
-          name: "build-reports-JVM Tests - JDK 11"
+          name: "build-reports-JVM Tests"
           path: |
             **/target/*-reports/TEST-*.xml
             target/build-report.json
